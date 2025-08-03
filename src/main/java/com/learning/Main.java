@@ -1,7 +1,6 @@
 package com.learning;
 
 import com.learning.dao.StudentDao;
-import com.learning.entities.Student;
 
 public class Main {
 
@@ -10,9 +9,9 @@ public class Main {
 
       StudentDao dao = new StudentDao();
 
-      System.out.println("----- Demo Create Student -----");
-      Student student1 = new Student("Ahmed", "Java");
-      dao.demoCreateStudent(student1);
+//      System.out.println("----- Demo Create Student -----");
+//      Student student1 = new Student("Ahmed", "Java");
+//      dao.demoCreateStudent(student1);
 
 //      System.out.println("----- Demo Get All Students -----");
 //      dao.demoGetAllStudents();
@@ -32,6 +31,11 @@ public class Main {
 //
 //      System.out.println("----- Demo Get All Students After Delete -----");
 //      dao.demoGetAllStudents();
+//
+//      System.out.println("----- Demo HQL get student by tech -----");
+//      dao.demoGetStudentByTech("java");
+      System.out.println("----- Demo HQL get student by age -----");
+      dao.demoGetStudentByAge(20, 30);
    }
 
 }

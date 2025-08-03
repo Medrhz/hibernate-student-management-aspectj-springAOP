@@ -18,6 +18,7 @@ public class Student {
    private Integer id;
    private String name;
    private String tech;
+   private Integer age;
 
    public Student (String name, String tech) {
       this.name = name;

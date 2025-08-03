@@ -4,6 +4,7 @@ import com.learning.Util;
 import com.learning.entities.Student;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,6 +112,53 @@ public class StudentDao {
       }
    }
 
+   //* HQL (hibernate Query Language)
+   public List<Student> getStudentByTech (String tech) {
+      List<Student> students = new ArrayList<Student>();
+      try (Session session = Util.getConnection().openSession()) {
+         //hql
+         String hql = "FROM Student s where s.tech = :tech order by s.name";
+         //create query
+         Query<Student> query = session.createQuery(hql, Student.class);
+         query.setParameter("tech", tech);
+         students = query.getResultList();
+         if (students.isEmpty()) {
+            logger.warn("not found any students");
+         }
+         logger.info("get students with success");
+         return students;
+      } catch (Exception e) {
+         logger.error("error to get students");
+         throw new RuntimeException(e);
+      }
+   }
+
+
+   // get Student by age
+
+   public List<Student> getStudentByAge (Integer minAge, Integer maxAge) {
+
+      List<Student> students = new ArrayList<>();
+
+      try (Session session = Util.getConnection().openSession()) {
+         // hql
+         String hql = "from Student s where s.age between :min And  :max";
+         // create query
+         Query<Student> query = session.createQuery(hql, Student.class);
+         query.setParameter("min", minAge);
+         query.setParameter("max", maxAge);
+         students = query.getResultList();
+         if (students.isEmpty()) {
+            logger.warn("not found any students");
+         }
+         logger.info("get students with success");
+         return students;
+      } catch (Exception e) {
+         throw new RuntimeException(e);
+      }
+
+   }
+
 
    //! demonstration
 
@@ -142,6 +190,20 @@ public class StudentDao {
 
    public void demoDeleteStudent (Integer studentId) {
       deleteStudent(studentId);
+   }
+
+   public void demoGetStudentByTech (String tech) {
+      for (Student student : getStudentByTech(tech)) {
+         System.out.println("==========================");
+         System.out.println(student.getId() + " - " + student.getName() + " -" + student.getTech());
+      }
+   }
+
+   public void demoGetStudentByAge (Integer minAge, Integer maxAge) {
+      for (Student student : getStudentByAge(minAge, maxAge)) {
+         System.out.println("==========================");
+         System.out.println(student.getId() + " - " + student.getName() + " -" + student.getTech());
+      }
    }
 
 }
