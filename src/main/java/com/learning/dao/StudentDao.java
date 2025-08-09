@@ -1,6 +1,7 @@
 package com.learning.dao;
 
 import com.learning.Util;
+import com.learning.aspects.TransStudent;
 import com.learning.aspects.TransactionAspect;
 import com.learning.entities.Student;
 import org.hibernate.Session;
@@ -14,7 +15,7 @@ import java.util.List;
 
 public class StudentDao {
 
-
+   @TransStudent
    public List<Student> getAllStudents () {
       List<Student> students = new ArrayList<Student>();
       Session session = Util.getConnection().openSession();
@@ -22,11 +23,13 @@ public class StudentDao {
       return students;
    }
 
+   @TransStudent
    public void createStudent (Student student) {
       Session session = TransactionAspect.getSession();
       session.persist(student);
    }
 
+   @TransStudent
    public Student getStudentById (Integer studentId) {
       Session session = TransactionAspect.getSession();
       Student student = session.find(Student.class, studentId);
@@ -34,11 +37,13 @@ public class StudentDao {
    }
 
 
+   @TransStudent
    public void updateStudent (Student newStudent) {
       Session session = TransactionAspect.getSession();
       session.merge(newStudent);
    }
 
+   @TransStudent
    public void deleteStudent (Integer studentId) {
       Session session = TransactionAspect.getSession();
       Student student = session.find(Student.class, studentId);
@@ -46,6 +51,7 @@ public class StudentDao {
 
    }
 
+   @TransStudent
    //* HQL (hibernate Query Language)
    public List<Student> getStudentByTech (String tech) {
       List<Student> students = new ArrayList<Student>();
@@ -60,6 +66,7 @@ public class StudentDao {
       return students;
    }
 
+   @TransStudent
    // get Student by age
    public List<Student> getStudentByAge (Integer minAge, Integer maxAge) {
       List<Student> students = new ArrayList<Student>();

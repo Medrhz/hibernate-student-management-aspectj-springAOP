@@ -21,7 +21,8 @@ public class TransactionAspect {
    private static final ThreadLocal<Session> threadLocalSession = new ThreadLocal<>();
    private static final Logger logger = LoggerFactory.getLogger(StudentDao.class);
 
-   @Around("execution(* com.learning.dao.*.*(..))")
+   //   @Around("execution(* com.learning.dao.*.*(..))")
+   @Around("@annotation(TransStudent)")
    public Object aroundGetAllStudents (ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
       logger.info(" ========================== " + proceedingJoinPoint
           .getSignature()
